@@ -7,13 +7,15 @@ public class Movement : MonoBehaviour {
     Vector3 currentLocation;
     Vector3 newLocation;
     bool unitIsActive = false;
-    bool playerIsActive = false;
+    public bool playerIsActive = false;
+    Player player;
 
 	// Use this for initialization
 	void Start () {
         currentLocation = gameObject.transform.position;
         newLocation = currentLocation;
         Debug.Log(currentLocation);
+        player = FindObjectOfType<Player>();
 	}
 	
 	// Update is called once per frame
@@ -57,11 +59,12 @@ public class Movement : MonoBehaviour {
                 gameObject.transform.position = newLocation;
                 currentLocation = newLocation;
             }
-            if (Input.GetKeyUp(KeyCode.Space) && playerIsActive == true)
+            if (Input.GetKeyUp(KeyCode.Space))
             {
-                Unit u = (Unit)FindObjectOfType(typeof(Unit));
-                u.health -= 1;
+                CastSpell();
+                Debug.Log("Casting Spell");
             }
+            
         }
         else if (unitIsActive == true && gameObject.tag == ("Unit"))
         {
@@ -91,6 +94,11 @@ public class Movement : MonoBehaviour {
             }
         }
 
-        
+    }
+
+    void CastSpell()
+    {
+        GameObject go = Instantiate(player.units[Random.Range(0,3)], new Vector3(Random.Range(0, 10), 1, Random.Range(0, 10)), Quaternion.identity);
+        Debug.Log(go);
     }
 }
