@@ -16,7 +16,9 @@ public class Movement : MonoBehaviour {
         newLocation = currentLocation;
         Debug.Log(currentLocation);
         player = FindObjectOfType<Player>();
-	}
+
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -62,9 +64,24 @@ public class Movement : MonoBehaviour {
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 CastSpell();
-                Debug.Log("Casting Spell");
             }
-            
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                DisplayUnitHealth();
+            }
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                if (player.spawnedUnits != null)
+                {
+                    AttackUnit();
+                }
+                else
+                {
+                    Debug.Log("No unit to attack");
+                    return;
+                }
+            }
+
         }
         else if (unitIsActive == true && gameObject.tag == ("Unit"))
         {
@@ -96,9 +113,46 @@ public class Movement : MonoBehaviour {
 
     }
 
+    
+
+
     void CastSpell()
     {
-        GameObject go = Instantiate(player.units[Random.Range(0,3)], new Vector3(Random.Range(0, 10), 1, Random.Range(0, 10)), Quaternion.identity);
-        Debug.Log(go);
+        GameObject go = Instantiate(player.unitsAvailable[Random.Range(0,3)], new Vector3(Random.Range(0, 10), 1, Random.Range(0, 10)), Quaternion.identity);
+        
+        player.spawnedUnits.Add(go);
+        Debug.Log("Cast spell" + go);
     }
+
+    void DisplayUnitHealth()
+    {
+        GameObject go = player.spawnedUnits[Random.Range(0,player.spawnedUnits.Count)];
+        int h = go.GetComponent<Unit>().GetHealth();
+        Debug.Log(go + " Health is " + h );
+    }
+
+    void AttackUnit()
+    {
+        GameObject go = player.spawnedUnits[Random.Range(0, player.spawnedUnits.Count)];
+        int h = go.GetComponent<Unit>().GetHealth();
+        Debug.Log(go + " Health is " + h);
+        if (go.GetComponent<Unit>().SetHealth(1) == true)
+        {
+            player.spawnedUnits.Remove(go);
+        }
+        else
+        {
+            Debug.Log("Unit Still alive");
+        }
+
+        //if (h == 0)
+        //{
+        //    Destroy(go);
+        //    player.spawnedUnits.Remove(go);
+        //}
+
+        
+
+    }
+
 }

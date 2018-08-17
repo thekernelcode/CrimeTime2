@@ -13,7 +13,6 @@ public class Tilemap : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         tiles = new GameObject[mapWidth, mapHeight];
-        print("created array");
 
         for (int y = 0; y < mapHeight; y++)
         {

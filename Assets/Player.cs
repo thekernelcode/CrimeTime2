@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    public GameObject[] units;
+    public GameObject[] unitsAvailable;
+    public List<GameObject> spawnedUnits;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    void Start () {
+        
+    spawnedUnits = new List<GameObject>();
+
+}
 	
 	// Update is called once per frame
 	void Update () {
