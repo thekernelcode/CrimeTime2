@@ -8,11 +8,15 @@ public class Worldmap : MonoBehaviour {
     public int mapHeight = 10;
     public GameObject tilePrefab;
     public GameObject[,] tiles;
+    public List<GameObject> tileGameObjects;
+
+    public float crimeInProgressCooldown;
 
 	// Use this for initialization
 	void Start () {
 
         tiles = new GameObject[mapWidth, mapHeight];
+        tileGameObjects = new List<GameObject>();
 
         for (int y = 0; y < mapHeight; y++)
         {
@@ -23,20 +27,51 @@ public class Worldmap : MonoBehaviour {
                 go.GetComponent<Tile>().yPos = y;       
                 go.name = (x + " , " + y);
                 go.transform.SetParent(this.transform);
+                tileGameObjects.Add(go);
             }
         }
+
+        crimeInProgressCooldown = 5f;
 	}
 
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update () 
+    
+    {
+        crimeInProgressCooldown -= Time.deltaTime;
+        if (crimeInProgressCooldown < 0)
+        {
+            CrimeInProgress();
+        }
 	}
 
     public Tile GetTileAt (int x, int y)
     {
-        GameObject go = tiles[x, y];
-        Tile t = go.GetComponent<Tile>();
-        return t;
+        foreach (GameObject tileGameObject in  tileGameObjects)
+        {
+            if (tileGameObject.transform.position.x == x && tileGameObject.transform.position.z == y)
+            {
+                Tile t = tileGameObject.GetComponent<Tile>();
+                return t;
+            }
+        }
+
+        return null;
+    }
+
+    public void CrimeInProgress()
+    {
+        int randomX = Random.Range(0, mapWidth);
+        int randomY = Random.Range(0, mapHeight);
+
+        Debug.Log("Crime in progress at " + randomX + ", " + randomY);
+        Tile t = GetTileAt(randomX, randomY);
+
+        t.GetComponent<Renderer>().material = t.crimeInProgressMaterial;
+
+        
+
+        crimeInProgressCooldown = 5f;
     }
 }
