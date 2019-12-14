@@ -27,6 +27,7 @@ public class Worldmap : MonoBehaviour {
                 go.GetComponent<Tile>().yPos = y;       
                 go.name = (x + " , " + y);
                 go.transform.SetParent(this.transform);
+                
                 tileGameObjects.Add(go);
             }
         }
@@ -69,6 +70,7 @@ public class Worldmap : MonoBehaviour {
         Tile t = GetTileAt(randomX, randomY);
 
         t.GetComponent<Renderer>().material = t.crimeInProgressMaterial;
+        t.crimeInProgress = true;
 
         
 
