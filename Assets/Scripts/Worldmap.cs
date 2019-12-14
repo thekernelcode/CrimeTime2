@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Worldmap : MonoBehaviour {
 
     public int mapWidth = 10;  
     public int mapHeight = 10;
     public GameObject tilePrefab;
+
     public GameObject[,] tiles;
     public List<GameObject> tileGameObjects;
 
@@ -29,6 +31,7 @@ public class Worldmap : MonoBehaviour {
                 go.transform.SetParent(this.transform);
                 
                 tileGameObjects.Add(go);
+                tiles[x, y] = go;
             }
         }
 
@@ -45,6 +48,7 @@ public class Worldmap : MonoBehaviour {
         {
             CrimeInProgress();
         }
+
 	}
 
     public Tile GetTileAt (int x, int y)
