@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Tile : MonoBehaviour
 {
@@ -14,16 +15,17 @@ public class Tile : MonoBehaviour
     public Material defaultMaterial;
     public Material crimeInProgressMaterial;
 
-    public float crimeInProgressTimer = 10f;
+    float crimeInProgressTimer = 10f;
 
-    CrimeInProgressUI crimeInProgressUI;
+    TextMeshPro textMeshPro;
+
+    
 
     // Start is called before the first frame update
     void Start()
     {
         // Make tile aware if the world it is in
         tileMapOfWorld = FindObjectOfType<Worldmap>();
-        crimeInProgressUI = FindObjectOfType<CrimeInProgressUI>();
         
     }
 
@@ -33,8 +35,15 @@ public class Tile : MonoBehaviour
         if (crimeInProgress == true)
         {
             crimeInProgressTimer -= Time.deltaTime;
-            crimeInProgressUI.startCountdown = true;
+            textMeshPro = GetComponentInChildren<TextMeshPro>();
+            textMeshPro.text = crimeInProgressTimer.ToString();
 
+            if (crimeInProgressTimer <= 0)
+            {
+                GetComponent<Renderer>().material.color = Color.gray;
+                crimeInProgressTimer = 0;
+                textMeshPro.text = "Failed to stop crime!";
+            }
         }
     }
 
