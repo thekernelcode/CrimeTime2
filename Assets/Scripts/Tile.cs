@@ -16,6 +16,8 @@ public class Tile : MonoBehaviour
     public Material crimeInProgressMaterial;
 
     float crimeInProgressTimer = 10f;
+    float crimeInProgressTimerDefault = 10f;
+    
 
     TextMeshPro textMeshPro;
 
@@ -54,6 +56,7 @@ public class Tile : MonoBehaviour
             crimeInProgress = false;
             Debug.Log("Player tagged this crime!, resetting state");
             GetComponent<Renderer>().material = defaultMaterial;
+            crimeInProgressTimer = crimeInProgressTimerDefault;
         }
     }
 }

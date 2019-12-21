@@ -5,42 +5,63 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 
 {
-    public float moveSpeed = 1f;
+    float moveSpeed = 3f;
+    public bool isMoving = false;
+
+    Petrol petrol;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        petrol = GetComponentInParent<Petrol>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (petrol.currentPetrol > 0)
         {
-            //transform.position = new Vector3(-1, transform.position.y, transform.position.z);
+            if (Input.GetKey(KeyCode.A))
+            {
+                //transform.position = new Vector3(-1, transform.position.y, transform.position.z);
 
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+                isMoving = true;
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                //transform.position = new Vector3(-1, transform.position.y, transform.position.z);
+
+                transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+                isMoving = true;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                //transform.position = new Vector3(-1, transform.position.y, transform.position.z);
+
+                transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+                isMoving = true;
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                //transform.position = new Vector3(-1, transform.position.y, transform.position.z);
+
+                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                isMoving = true;
+            }
+
+            if (!Input.anyKey)
+            {
+                isMoving = false;
+            }
         }
-        if (Input.GetKey(KeyCode.S))
+        else
         {
-            //transform.position = new Vector3(-1, transform.position.y, transform.position.z);
-
-            transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+            isMoving = false;
         }
-        if (Input.GetKey(KeyCode.D))
-        {
-            //transform.position = new Vector3(-1, transform.position.y, transform.position.z);
-
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            //transform.position = new Vector3(-1, transform.position.y, transform.position.z);
-
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-        }
-
-
+        
     }
 }
