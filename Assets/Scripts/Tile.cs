@@ -15,8 +15,10 @@ public class Tile : MonoBehaviour
     public Material defaultMaterial;
     public Material crimeInProgressMaterial;
 
-    float crimeInProgressTimer = 10f;
-    float crimeInProgressTimerDefault = 10f;
+    [SerializeField]
+    float crimeInProgressTimer = 3f;
+    [SerializeField]
+    float crimeInProgressTimerDefault = 3f;
     
 
     TextMeshPro textMeshPro;
